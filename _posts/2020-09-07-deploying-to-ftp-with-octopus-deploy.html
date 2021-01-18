@@ -1,0 +1,17 @@
+---
+layout: post
+title: Deploying to FTP with Octopus Deploy
+date: '2020-09-07T22:18:00.000-07:00'
+author: Usein Mambediiev
+tags:
+- PowerShell
+- FTP
+- shared hosting
+- octopus
+- Azure DevOps
+modified_time: '2020-09-07T22:19:22.859-07:00'
+blogger_id: tag:blogger.com,1999:blog-2780778380464436954.post-1469188359571943457
+blogger_orig_url: https://usemam.blogspot.com/2020/09/deploying-to-ftp-with-octopus-deploy.html
+---
+
+<p>&nbsp;Recently I had overhauled build and deployment procedure for one of my pet projects. Project is a web app built with ASP.NET MVC and Web API, and it's hosted on one of the shared hosting platforms. Those unfortunate enough to still use shared hosting know, that there's little alternative to deploy there besides using FTP file-share.</p><span><a name='more'></a></span><p>New delivery pipeline employs <a href="https://dev.azure.com/">Azure Pipelines</a>&nbsp;as CI and Octopus Deploy for managing environments and releases as well as running deployments. Setting up a pipeline that builds web app and then pushes packages into Octopus was quite easy - I just needed to install <a href="https://marketplace.visualstudio.com/items?itemName=octopusdeploy.octopus-deploy-build-release-tasks">Octopus Deploy extension</a> into my Azure DevOps org and add correct steps into project's <i>azure-pipelines.yml</i> file.</p><p>Hard things to do came about when I was trying to figure out how to deploy my new shiny packages to an FTP folder provided by shared hosting. Since Octopus doesn't have dedicated FTP deployment target, I needed to find a work-around. One (and I think the only) possible way was to deploy a package on a jump-box machine and then use community "Upload files by FTP" step - much like it's described in <a href="https://help.octopus.com/t/deploy-to-shared-hosting/20773">this forum thread</a>. Sounds doable - doesn't it? However, after initial step setup and a test run, I've got an error message that "SSH host key fingerprint "" does not match pattern" and an awfully long regular expression in it. My initial thought was "why this thing needs a host key fingerprint?" - because the FTP I was deploying to isn't secure one, I believed that all I need to provide as step parameters are host, folder name, user name and password. Trying different combinations of step parameters didn't help, so I started to look for a documentation for a step. All I found was <a href="https://library.octopus.com/step-templates/3b534e57-e8b0-4a06-aa2c-9e7eba1f4337/actiontemplate-upload-files-by-ftp">this page</a> on Octopus's website.</p><p>That page didn't have an explanation for my error, but it did have an entire PowerShell script for a step (you just need to click on big "Show script" button at the bottom of the page). Script itself isn't very big, so after some tinkering I was able to create my reduced version of a script, that only works with non-secure FTP servers - not that I needed more from it.</p><p>Anyway - instead of "Upload files by FTP" step, I've added a custom script as a new step into my Octopus deployment process and copied my version of a script into it. Long story short - this helped and now I'm officially deploying to FTP with Octopus Deploy!</p><p>Below is my version of an FTP uploading script.<br /></p><script src="https://gist.github.com/usemam/80c8e662e181f7d4e8464da8fdbfe3e9.js"></script>

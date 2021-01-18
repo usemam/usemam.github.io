@@ -1,0 +1,16 @@
+---
+layout: post
+title: 'On Kubernetes learning path - #1'
+date: '2020-09-13T04:54:00.001-07:00'
+author: Usein Mambediiev
+tags:
+- distributed systems
+- learning
+- books
+- k8s
+modified_time: '2020-09-13T04:54:22.051-07:00'
+blogger_id: tag:blogger.com,1999:blog-2780778380464436954.post-9199252871569166605
+blogger_orig_url: https://usemam.blogspot.com/2020/09/on-kubernetes-learning-path-1.html
+---
+
+<p>My first attempt at learning Kubernetes was about a year ago. I've managed to setup a <a href="https://minikube.sigs.k8s.io/docs/" target="_blank">minikube</a>&nbsp;instance and run a cluster of <a href="https://www.rabbitmq.com/" target="_blank">RabbitMQ</a> + monitoring stack on top (<a href="https://prometheus.io/" target="_blank">Prometheus</a> and <a href="https://grafana.com/" target="_blank">Grafana</a>). While this all worked well inside a single minikube instance, doing such lab activities without being able to project my meager experience onto real-life project did not provide for a great learning opportunity.</p><span><a name='more'></a></span><p>Since then I still didn't get my hands really dirty with k8s in any way. Fact is - I almost gave up hope learning it someday. But that was until I found that you can get <a href="https://azure.microsoft.com/en-us/resources/designing-distributed-systems/" target="_blank">Brendan Burns' "Designing Distributed Systems"</a>&nbsp;e-book for free from Microsoft.</p><p>The book is basically a catalog of different patterns that could be used when you run your application in containers - so we're talking Docker and k8s in particular. It is conveniently broken down into articles each dedicated to specific pattern, and all articles are grouped into three parts:</p><p></p><ol style="text-align: left;"><li>Single-node patterns - covers only patterns applicable to just one node in a cluster.</li><li>Serving patterns - those that define how entire application runs in a cluster</li><li>Batch computational patterns - covers different aspects of processing large amount of data</li></ol><p style="text-align: left;">My plan of course is to go through each pattern while supporting theory with hands-on examples from the book. For that I've created a <a href="https://github.com/usemam/dds" target="_blank">GitHub repository</a>, where I'm going to track my progress of working on those hands-on examples.</p><p style="text-align: left;">So, happy trails to me!</p><p></p>

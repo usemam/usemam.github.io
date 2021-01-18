@@ -1,0 +1,17 @@
+---
+layout: post
+title: Shine and poverty of running Kubernetes on Raspberry Pi
+date: '2020-09-28T22:50:00.001-07:00'
+author: Usein Mambediiev
+tags:
+- docker
+- ubuntu
+- microk8s
+- k8s
+- raspberry pi
+modified_time: '2020-09-28T22:50:31.934-07:00'
+blogger_id: tag:blogger.com,1999:blog-2780778380464436954.post-6069662458429023328
+blogger_orig_url: https://usemam.blogspot.com/2020/09/shine-and-poverty-of-running-kubernetes.html
+---
+
+Back in the days, when I didn't have a cluster of Raspberry Pi computers, running Kubernetes using said cluster seemed like a good idea, at least for the purpose of learning things. Now, in hindsight, it's pretty clear that it's not all peachy-rosy for those who run k8s on Raspberry Pi nodes.<span><a name='more'></a></span><div>To not go around and about, I'll state pros and cons that I've discovered so far.</div><div>So my pros are, so far:<br /><ul style="text-align: left;"><li>You. Have. Personal. Cloud.<br />You can literally do whatever you want with it - install software, deploy and run pet projects, learn new things, or just let it lie in the corner doing nothing.</li><li>You're not paying for anything, except initially for the hardware.</li><li>It's a great way to learn more about Linux (yes - you can run Ubuntu on Raspberry Pi, without any additional effort).</li></ul><div>Now, to unfortunate downsides:</div></div><span></span><div><ul style="text-align: left;"><li>I had to find Kubernetes implementation that works out of the box.<br />After trying without luck to install Docker and k8s onto my Pi 4's that were running standard Raspbian OS, I found that it would be much easier to use Ubuntu with <a href="https://microk8s.io/" target="_blank">MicroK8s</a> on top.</li><li>Not all Docker images are compiled for ARM64.<br />Most popular Docker images have ARM64 tags now, but when you have to use something slightly more obscure, such as <a href="https://hub.docker.com/r/ganomede/twemproxy" target="_blank">Redis proxy server</a>, you'll have to find image that runs on ARM64, or compile it yourself. Latter is fortunately quite easy thanks to community effort and many instructions <a href="https://www.docker.com/blog/multi-arch-images/" target="_blank">available</a> on the Internet. But even then, compilation may fail in some cases due to numerous reasons.</li><li>You won't be able to use Helm properly.<br />I mean of course you will be able to install it. MicroK8s even has it available as a plugin that could be easily enabled. But when it's time to use Helm packages - see previous point. Yes - not all Helm packages support ARM64. In my case it was <a href="https://github.com/coreos/etcd-operator" target="_blank">etcd-operator</a>.</li></ul><div>Taking all of the above into account, I still think that running k8s on Pis is a worthwhile experience for anyone interested in learning k8s and Docker. Just prepare yourself that it won't come easy to you ;)</div></div>
